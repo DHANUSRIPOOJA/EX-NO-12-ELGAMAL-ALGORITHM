@@ -24,9 +24,44 @@ To Implement ELGAMAL ALGORITHM
 6. Security: The security of the ElGamal algorithm relies on the difficulty of solving the discrete logarithm problem in a large prime field, making it secure for encryption.
 
 ## Program:
+```
+import random
+
+def modinv(a, p):
+    return pow(a, -1, p)
+
+def keygen(p, g):
+    x = random.randint(2, p - 2)
+    y = pow(g, x, p)
+    return x, y
+
+def encrypt(p, g, y, m):
+    k = random.randint(2, p - 2)
+    c1 = pow(g, k, p)
+    c2 = (m * pow(y, k, p)) % p
+    return c1, c2
+
+def decrypt(p, x, c1, c2):
+    s = pow(c1, x, p)
+    m = (c2 * modinv(s, p)) % p
+    return m
 
 
+p = 467  
+g = 2    
+x, y = keygen(p, g)
+print("Private Key:", x)
+print("Public Key:", y)
+
+message = 123
+c1, c2 = encrypt(p, g, y, message)
+print("\nCiphertext: (", c1, ",", c2, ")")
+
+decrypted = decrypt(p, x, c1, c2)
+print("Decrypted Message:", decrypted)
+```
 ## Output:
+<img width="1087" height="259" alt="image" src="https://github.com/user-attachments/assets/c5a70074-066e-4800-bf67-eb213cbcb64f" />
 
 
 ## Result:
